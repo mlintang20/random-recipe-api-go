@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"webapp1/handler"
+	"webapp1/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,6 +12,7 @@ import (
 // 1. ambil data dari https://api.spoonacular.com/recipes/random
 // 2. bikin server
 // 3. bikin endpoint dan handler nya
+// 4. buat middleware check API Key
 
 func main() {
 	r := gin.Default()
@@ -21,6 +23,10 @@ func main() {
 		})
 	})
 
+	// middleware
+	r.Use(middleware.APIKey())
+
+	// recipes endpoint
 	r.GET("/recipes", handler.HandlerGetRecipe)
 
 	r.Run(":8080")
